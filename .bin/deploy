@@ -1,0 +1,9 @@
+#!/bin/sh
+
+bun build src --target=bun --outfile catd
+sed -i '1s/^/#!\/usr\/bin\/env bun\n/' catd
+chmod +x catd
+cp -v catd ~/git/nixfiles/secrets/catd
+chmod +x ~/git/nixfiles/secrets/catd
+# rsync catd flowe:catd/catd
+# ssh flowe sudo systemctl restart catd
