@@ -59,7 +59,7 @@ for (let i = 0; i <= 2; i++) {
     break;
 }
 
-if (n! < 0.4) {
+if (n! <= 0.5) {
     const resp = await fetch(process.env.NTFY_URL!, {
         method: "POST",
         headers: {
