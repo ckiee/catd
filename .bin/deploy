@@ -7,3 +7,4 @@ cp -v catd ~/git/nixfiles/secrets/catd
 chmod +x ~/git/nixfiles/secrets/catd
 # rsync catd flowe:catd/catd
 # ssh flowe sudo systemctl restart catd
+(cd ~/git/nixfiles && nix-shell --run "c catcam")

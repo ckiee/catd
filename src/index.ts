@@ -64,16 +64,14 @@ for (let i = 0; i <= 2; i++) {
     break;
 }
 
-if (n! <= 0.5) {
-    console.log("ntfy send");
-    const resp = await fetch(process.env.NTFY_URL!, {
-        method: "POST",
-        headers: {
-            Title: `pspspsps: ${n! * 10}/10`,
-            Priority: "high",
-        },
-        body: await Bun.file(BOWL).arrayBuffer(),
-    });
+console.log("ntfy send");
+const resp = await fetch(process.env.NTFY_URL!, {
+    method: "POST",
+    headers: {
+        Title: `pspspsps: ${n! * 10}/10`,
+        Priority: n! <= .5 ? "high" : "min",
+    },
+    body: await Bun.file(BOWL).arrayBuffer(),
+});
 
-    if (!resp.ok) throw new Error(`${resp.status}: ${await resp.text()}`);
-}
+if (!resp.ok) throw new Error(`${resp.status}: ${await resp.text()}`);
