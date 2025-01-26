@@ -11,6 +11,8 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+console.log(`ffmpeg catcam into ${BOWL}`)
+
 await new Promise<void>((resolve, reject) => {
     ffmpeg("https://catcam.tailnet.ckie.dev/index.m3u8")
         .on("error", (e, _, stderr) => {
@@ -22,6 +24,7 @@ await new Promise<void>((resolve, reject) => {
         .save(BOWL);
 });
 
+console.log(`read ${BOWL} into base64`)
 const encoded = await readFile(BOWL, { encoding: "base64" });
 
 let n;
@@ -48,6 +51,7 @@ for (let i = 0; i <= 2; i++) {
         ],
         max_completion_tokens: 10,
     });
+    console.log(`llm result:`, langlemangle.choices[0].message.content)
 
     const perc =
         langlemangle.choices[0].message.content?.match(
@@ -56,10 +60,12 @@ for (let i = 0; i <= 2; i++) {
     if (!perc) continue;
 
     n = parseFloat(perc) / 100;
+    console.log({n})
     break;
 }
 
 if (n! <= 0.5) {
+    console.log("ntfy send");
     const resp = await fetch(process.env.NTFY_URL!, {
         method: "POST",
         headers: {
